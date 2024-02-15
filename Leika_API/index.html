@@ -9,6 +9,7 @@
 
   <body>
     <h1>Leika API Abfrage</h1>
+    <h2 id="Error"></h2>
     <p>
       Gib den Leistungsschlüssel ein:
       <input type="text" id="leistungsschluessel" />
@@ -88,21 +89,28 @@
 
       function stripHtmlFrom2DArray(array) {
         // Iteriere über jedes Element im äußeren Array
-        for (let i = 0; i < array.length; i++) {
-          // Überprüfe, ob das Element ein Array ist
-          if (Array.isArray(array[i])) {
-            // Iteriere über jedes Element im inneren Array
-            for (let j = 0; j < array[i].length; j++) {
-              // Überprüfe, ob das innere Element ein String ist
-              if (typeof array[i][j] === "string") {
-                // Entferne HTML-Tags aus dem String
-                array[i][j] = array[i][j].replace(/<[^>]*>/g, "");
-                array[i][j] = array[i][j].replace(/&#xa0;/g, " ");
+        if (array.length === 0) {
+          const myHeading = document.getElementById("Error");
+          myHeading.textContent = "Fehlerhafte LEIKA";
+        } else {
+          const myHeading = document.getElementById("Error");
+          myHeading.textContent = "";
+          for (let i = 0; i < array.length; i++) {
+            // Überprüfe, ob das Element ein Array ist
+            if (Array.isArray(array[i])) {
+              // Iteriere über jedes Element im inneren Array
+              for (let j = 0; j < array[i].length; j++) {
+                // Überprüfe, ob das innere Element ein String ist
+                if (typeof array[i][j] === "string") {
+                  // Entferne HTML-Tags aus dem String
+                  array[i][j] = array[i][j].replace(/<[^>]*>/g, "");
+                  array[i][j] = array[i][j].replace(/&#xa0;/g, " ");
+                }
               }
             }
           }
+          return array;
         }
-        return array;
       }
     </script>
   </body>
