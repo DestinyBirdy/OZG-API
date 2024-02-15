@@ -62,21 +62,39 @@
         const formattedResponse = JSON.stringify(data, null, 2);
         document.getElementById("api-response").innerText = formattedResponse;
       }
+      // Diese Funktion konvertiert ein Objekt (data) in eine HTML-Tabelle.
       function convert(data) {
-        var result = [];
+        var result = []; // Ein leeres Array, in das wir die Daten umwandeln werden.
 
-        for (var i in data) result.push([i, data[i]]);
+        // Iteriere über die Eigenschaften des Objekts und füge sie als Arrays in das result-Array ein.
+        for (var i in data) {
+          result.push([i, data[i]]);
+        }
+
+        // Entferne HTML-Tags aus dem result-Array (stripHtmlFrom2DArray ist eine separate Funktion).
         const strippedArray = stripHtmlFrom2DArray(result);
-        console.log(strippedArray);
 
+        // Wähle das <tbody>-Element der Tabelle mit der ID "myTable" aus.
         const tableBody = document.querySelector("#myTable tbody");
+
+        // Iteriere über jede Zeile (rowData) im result-Array.
         result.forEach((rowData) => {
+          // Erstelle eine neue <tr>-Zeile für die Tabelle.
           const row = document.createElement("tr");
+
+          // Iteriere über jede Zelle (cellData) in der aktuellen Zeile.
           rowData.forEach((cellData) => {
+            // Erstelle eine neue <td>-Zelle für die Tabelle.
             const cell = document.createElement("td");
+
+            // Setze den Textinhalt der Zelle auf den Wert der aktuellen Zelle (cellData).
             cell.textContent = cellData;
+
+            // Füge die Zelle zur aktuellen Zeile hinzu.
             row.appendChild(cell);
           });
+
+          // Füge die fertige Zeile zur Tabelle hinzu.
           tableBody.appendChild(row);
         });
       }
