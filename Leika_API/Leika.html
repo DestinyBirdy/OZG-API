@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <title>Leika API Anbindung</title>
+    <style>
+        .header-row {
+           display: none;
+        }
+     </style>
+</head>
+
+<body>
+    <h1>Leika API Abfrage</h1>
+    <p>Gib den Leistungsschlüssel ein: <input type="text" id="leistungsschluessel"></p>
+    <form action="#" name="languageForm">
+
+  </form>
+    <button onclick="fetchData()">Daten von der API abrufen</button>
+    <button onclick="clearResponse()">Antwort löschen</button>
+    <button onclick="window.location = 'Zufi.html';">Zufi Abfrage</button>
+
+    <table id="myTable">
+        <thead class="header-row">
+          <tr>
+            <th>Stammtext</th>
+            <th>Inhalt</th>
+            <!-- Weitere Spalten hier -->
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Hier werden die Daten eingefügt -->
+        </tbody>
+      </table>
+
+    <script>
+
+        // API-Endpunkt
+        const apiUrl = 'https://leika.vsm.nrw/services/';
+        // Eine GET-Anfrage an die API senden
+        async function fetchData() {
+            const leistungsschluessel = document.getElementById('leistungsschluessel').value;
+            const params = {
+                        regionalSchluessel: '057620012012',
+                        leistungsSchluessel: leistungsschluessel,
+                        sprache: 'DE'
+                          };
+
+            try {
+                const response = await fetch(`${apiUrl}${new URLSearchParams(params)}`);
+                const data = await response.json();
+                convert(data);
+
+            } catch (error) {
+                console.error('Fehler beim Abrufen der Daten:', error);
+            }
+        }
+
+        // Antwort im HTML-Dokument anzeigen
+        function displayResponse(data) {
+            const formattedResponse = JSON.stringify(data, null, 2);
+            document.getElementById('api-response').innerText = formattedResponse;
+
+            
+        }
+        function convert(data) {
+            var result = [];
+
+            for(var i in data)
+                result.push([i, data [i]]);
+                const strippedArray = stripHtmlFrom2DArray(result);
+                console.log(strippedArray)
+                
+                const tableBody = document.querySelector('#myTable tbody');
+                result.forEach(rowData => {
+                const row = document.createElement('tr');
+                rowData.forEach(cellData => {
+                const cell = document.createElement('td');
+                cell.textContent = cellData;
+                row.appendChild(cell);
+                });
+                tableBody.appendChild(row);
+                });
+ 
+      }
+        
+        // Antwort löschen
+        function clearResponse() {
+            //document.getElementById('api-response').innerText = '';
+            location.reload(); 
+        }
+
+        function stripHtmlFrom2DArray(array) {
+    // Iteriere über jedes Element im äußeren Array
+    for (let i = 0; i < array.length; i++) {
+        // Überprüfe, ob das Element ein Array ist
+        if (Array.isArray(array[i])) {
+            // Iteriere über jedes Element im inneren Array
+            for (let j = 0; j < array[i].length; j++) {
+                // Überprüfe, ob das innere Element ein String ist
+                if (typeof array[i][j] === 'string') {
+                    // Entferne HTML-Tags aus dem String
+                    array[i][j] = array[i][j].replace(/<[^>]*>/g, '');
+                    array[i][j] = array[i][j].replace(/&#xa0;/g, ' ');
+                }
+            }
+        }
+    }
+    return array;
+}
+
+    </script>
+</body>
+</html>
