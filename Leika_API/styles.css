@@ -4,16 +4,11 @@ body {
   margin: 0 auto; /* Zentriert den Inhalt horizontal */
   padding: 0;
   background-color: #f5f5f5;
-  max-width: 2000px; /* Begrenzt die Breite des Inhalts */
+  max-width: 90%; /* Begrenzt die Breite des Inhalts auf 90% */
 }
 
-h1 {
-  color: #333;
-  text-align: center;
-  padding: 20px;
-}
+h1,
 h2 {
-  color: #c90b0b;
   text-align: center;
   padding: 20px;
 }
@@ -22,6 +17,7 @@ p {
   font-size: 16px;
   color: #666;
   margin: 0;
+  line-height: 1.5; /* Verbessert den Zeilenabstand */
 }
 
 input[type="text"] {
