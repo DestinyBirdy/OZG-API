@@ -148,3 +148,41 @@ function buildTable2(data) {
     table.appendChild(row);
   });
 }
+
+// Funktion zum Exportieren einer HTML-Tabelle als PDF
+function exportToPdf() {
+  // Schritt 1: HTML-Tabelle aus dem DOM abrufen
+  var tableHtml = document.getElementById("myTable").outerHTML; // Änderung hier
+
+  // Schritt 2: Stil für die PDF-Darstellung definieren
+  var style = `
+      <style>
+          table {
+              width: 100%;
+              font: 12px Calibri;
+          }
+          table, th, td {
+              border: solid 1px #DDD;
+              border-collapse: collapse;
+              padding: 2px 3px;
+              text-align: justify;
+          }
+      </style>
+  `;
+
+  // Schritt 3: Ein neues Fenster öffnen, um die PDF darzustellen
+  var printWindow = window.open("", "_blank", "height=700,width=700");
+  printWindow.document.write("<html><head>");
+  printWindow.document.write(style);
+  printWindow.document.write("</head><body>");
+
+  // Schritt 4: Die HTML-Tabelle in das Fenster schreiben
+  printWindow.document.write(tableHtml);
+  printWindow.document.write("</body></html>");
+
+  // Schritt 5: Nach einer kurzen Verzögerung die PDF drucken und das Fenster schließen
+  setTimeout(function () {
+    printWindow.print();
+    printWindow.close();
+  }, 100);
+}
