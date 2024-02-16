@@ -88,8 +88,7 @@ function stripHtmlFrom2DArray(array) {
           // Überprüfe, ob das innere Element ein String ist
           if (typeof array[i][j] === "string") {
             // Entferne HTML-Tags aus dem String
-            array[i][j] = array[i][j].replace(/<[^>]*>/g, "");
-            array[i][j] = array[i][j].replace(/&#xa0;/g, " ");
+            array[i][j] = array[i][j].replace(/<[^>]*>|&#xa0;/g, "");
           }
         }
       }
