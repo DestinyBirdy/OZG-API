@@ -110,9 +110,13 @@ function stripHtmlFrom2DArray(array) {
 
 function buildTable2(data) {
   const myArray = data;
-
   // Create the table header row
   const table = document.getElementById("myTable");
+  // Clear existing table content
+  while (table.firstChild) {
+    table.removeChild(table.firstChild);
+  }
+
   const headerRow = document.createElement("tr");
   for (const key in myArray[0]) {
     if (myArray[0].hasOwnProperty(key)) {
