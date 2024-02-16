@@ -26,6 +26,9 @@ async function fetchData() {
       const data = await response.json();
       const result = convert(data);
       buildTable2(result);
+      const tableHeaders = document.getElementsByTagName("th");
+      tableHeaders[0].innerHTML = "Stammtext";
+      tableHeaders[1].innerHTML = "Inhalt";
       //createtable(result);
     }
   } catch (error) {
