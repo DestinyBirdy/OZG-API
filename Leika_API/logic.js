@@ -51,34 +51,6 @@ function convert(data) {
   }
   return result;
 }
-// Diese Funktion erstellt eine Tabelle, indem zuvor das Array von HTMLTags bereinigt wird.
-function createtable(result) {
-  // Entferne HTML-Tags aus dem result-Array (stripHtmlFrom2DArray ist eine separate Funktion).
-  const strippedArray = stripHtmlFrom2DArray(result);
-  // Wähle das <tbody>-Element der Tabelle mit der ID "myTable" aus.
-  const tableBody = document.querySelector("#myTable tbody");
-  tableBody.innerHTML = "";
-  // Iteriere über jede Zeile (rowData) im result-Array.
-  result.forEach((rowData) => {
-    // Erstelle eine neue <tr>-Zeile für die Tabelle.
-    const row = document.createElement("tr");
-
-    // Iteriere über jede Zelle (cellData) in der aktuellen Zeile.
-    rowData.forEach((cellData) => {
-      // Erstelle eine neue <td>-Zelle für die Tabelle.
-      const cell = document.createElement("td");
-
-      // Setze den Textinhalt der Zelle auf den Wert der aktuellen Zelle (cellData).
-      cell.textContent = cellData;
-
-      // Füge die Zelle zur aktuellen Zeile hinzu.
-      row.appendChild(cell);
-    });
-
-    // Füge die fertige Zeile zur Tabelle hinzu.
-    tableBody.appendChild(row);
-  });
-}
 
 // Antwort löschen
 function clearResponse() {
@@ -131,17 +103,20 @@ function buildTable2(data) {
   table.appendChild(headerRow);
 
   // Create rows for each object
+
   myArray.forEach((obj) => {
     const row = document.createElement("tr");
     for (const key in obj) {
       if (obj.hasOwnProperty(key)) {
         const cell = document.createElement("td");
-        // Remove <p> tags from the cell content
         const cleanedContent = obj[key]
           .toString()
           .replace(/<[^>]*>|&#xa0;/g, "");
+
         cell.textContent = cleanedContent;
-        console.log(cleanedContent);
+        cell.addEventListener("click", () => {
+          cell.classList.toggle("expanded"); // Toggle expanded state
+        });
         row.appendChild(cell);
       }
     }
