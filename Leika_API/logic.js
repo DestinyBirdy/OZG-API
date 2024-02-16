@@ -1,5 +1,6 @@
 // API-Endpunkt
 const apiUrl = "https://leika.vsm.nrw/services/";
+const apiUrlsearch = "https://leika.vsm.nrw/services";
 // Eine GET-Anfrage an die API senden
 async function fetchData() {
   const leistungsschluessel = document.getElementById(
@@ -12,11 +13,21 @@ async function fetchData() {
   };
 
   try {
-    const response = await fetch(`${apiUrl}${new URLSearchParams(params)}`);
-    const data = await response.json();
+    let response;
 
-    const result = convert(data);
-    createtable(result);
+    if (/[a-zA-Z]|§/.test(leistungsschluessel) === true) {
+      response = await fetch(
+        `${apiUrlsearch}?q=${new URLSearchParams(params)}`
+      );
+      const data = await response.json();
+      buildTable2(data);
+    } else {
+      response = await fetch(`${apiUrl}${new URLSearchParams(params)}`);
+      const data = await response.json();
+      const result = convert(data);
+      buildTable2(result);
+      //createtable(result);
+    }
   } catch (error) {
     console.error("Fehler beim Abrufen der Daten:", error);
   }
@@ -95,4 +106,38 @@ function stripHtmlFrom2DArray(array) {
     }
     return array;
   }
+}
+
+function buildTable2(data) {
+  const myArray = data;
+
+  // Create the table header row
+  const table = document.getElementById("myTable");
+  const headerRow = document.createElement("tr");
+  for (const key in myArray[0]) {
+    if (myArray[0].hasOwnProperty(key)) {
+      const headerCell = document.createElement("th");
+      headerCell.textContent = key;
+      headerRow.appendChild(headerCell);
+    }
+  }
+  table.appendChild(headerRow);
+
+  // Create rows for each object
+  myArray.forEach((obj) => {
+    const row = document.createElement("tr");
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        const cell = document.createElement("td");
+        // Remove <p> tags from the cell content
+        const cleanedContent = obj[key]
+          .toString()
+          .replace(/<[^>]*>|&#xa0;/g, "");
+        cell.textContent = cleanedContent;
+        console.log(cleanedContent);
+        row.appendChild(cell);
+      }
+    }
+    table.appendChild(row);
+  });
 }
