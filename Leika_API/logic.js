@@ -85,13 +85,14 @@ function stripHtmlFrom2DArray(array) {
 
 function buildTable2(data) {
   const myArray = data;
-  // Create the table header row
   const table = document.getElementById("myTable");
+
   // Clear existing table content
   while (table.firstChild) {
     table.removeChild(table.firstChild);
   }
 
+  // Create the table header row
   const headerRow = document.createElement("tr");
   for (const key in myArray[0]) {
     if (myArray[0].hasOwnProperty(key)) {
@@ -103,17 +104,19 @@ function buildTable2(data) {
   table.appendChild(headerRow);
 
   // Create rows for each object
-
   myArray.forEach((obj) => {
     const row = document.createElement("tr");
     for (const key in obj) {
       if (obj.hasOwnProperty(key)) {
         const cell = document.createElement("td");
-        const cleanedContent = obj[key]
-          .toString()
-          .replace(/<[^>]*>|&#xa0;/g, "");
+        const cleanedContent = obj[key].toString().replace(/&#xa0;/g, ""); // Remove non-breaking spaces
 
-        cell.textContent = cleanedContent;
+        // Preserve list tags
+        const parsedContent = cleanedContent
+          .replace(/<li>/g, "<br>• ") // Remove HTML-List tags and add a bulletpoint and a break
+          .replace(/<\/li>/g, "");
+        console.log(parsedContent);
+        cell.innerHTML = parsedContent; // Use innerHTML to render list tags
         cell.addEventListener("click", () => {
           cell.classList.toggle("expanded"); // Toggle expanded state
         });
