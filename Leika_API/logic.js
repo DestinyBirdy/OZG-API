@@ -109,12 +109,10 @@ function buildTable2(data) {
     for (const key in obj) {
       if (obj.hasOwnProperty(key)) {
         const cell = document.createElement("td");
-        const cleanedContent = obj[key].toString().replace(/&#xa0;/g, ""); // Remove non-breaking spaces
+        const cleanedContent = obj[key].toString(); // Remove non-breaking spaces
 
         // Preserve list tags
-        const parsedContent = cleanedContent
-          .replace(/<li>/g, "<br>• ") // Remove HTML-List tags and add a bulletpoint and a break
-          .replace(/<\/li>/g, "");
+        const parsedContent = cleanedContent;
         console.log(parsedContent);
         cell.innerHTML = parsedContent; // Use innerHTML to render list tags
         cell.addEventListener("click", () => {
