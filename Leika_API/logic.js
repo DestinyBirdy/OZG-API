@@ -18,14 +18,13 @@ async function fetchData() {
     );
     const data = await response.json();
     if (/[a-zA-Z]|§/.test(leistungsschluessel) === true) {
-      buildTable2(data);
+      buildTable2(data, false);
     } else {
       const result = convert(data);
-      buildTable2(result);
+      buildTable2(result, true);
       const tableHeaders = document.getElementsByTagName("th");
-      tableHeaders[0].innerHTML = "Stammtext";
-      tableHeaders[1].innerHTML = "Inhalt";
-      //createtable(result);
+      //tableHeaders[0].innerHTML = "Stammtext";
+      //tableHeaders[1].innerHTML = "Inhalt";
     }
   } catch (error) {
     console.error("Fehler beim Abrufen der Daten:", error);
@@ -49,48 +48,66 @@ function clearResponse() {
   location.reload();
 }
 
-function buildTable2(data) {
+function buildTable2(data, check) {
+  const checkLeika = check;
   const myArray = data;
-  const table = document.getElementById("myTable");
-
-  // Clear existing table content
-  while (table.firstChild) {
-    table.removeChild(table.firstChild);
+  const container = document.getElementById("myContainer"); // Verwende ein Container-Element statt einer Tabelle
+  // Lösche den vorhandenen Inhalt im Container
+  while (container.firstChild) {
+    container.removeChild(container.firstChild);
   }
 
-  // Create the table header row
-  const headerRow = document.createElement("tr");
+  // Erstelle die Überschriftenzeile
+  const headerRow = document.createElement("div");
+  headerRow.classList.add("header-row"); // Füge eine CSS-Klasse hinzu, um das Styling zu steuern
   for (const key in myArray[0]) {
     if (myArray[0].hasOwnProperty(key)) {
-      const headerCell = document.createElement("th");
+      const headerCell = document.createElement("div");
+      headerCell.classList.add("header-cell"); // Füge eine CSS-Klasse hinzu
       headerCell.textContent = key;
       headerRow.appendChild(headerCell);
     }
   }
-  table.appendChild(headerRow);
+  container.appendChild(headerRow);
 
-  // Create rows for each object
+  // Erstelle für jedes Objekt eine Zeile
   myArray.forEach((obj) => {
-    const row = document.createElement("tr");
+    const row = document.createElement("div");
+    row.classList.add("data-row"); // Füge eine CSS-Klasse hinzu
+
     for (const key in obj) {
       if (obj.hasOwnProperty(key)) {
-        const cell = document.createElement("td");
-
-        cell.innerHTML = obj[key]; // Use innerHTML to render list tags
-        cell.addEventListener("click", () => {
-          cell.classList.toggle("expanded"); // Toggle expanded state
-        });
+        const cell = document.createElement("div");
+        cell.classList.add("data-cell"); // Füge eine CSS-Klasse hinzu
+        cell.style.whiteSpace = "nowrap";
+        // Begrenze den Zelleninhalt auf maximal 10 Zeichen
+        if (checkLeika) {
+          cell.innerHTML = obj[key];
+        } else {
+          const truncatedValue = obj[key].toString().substring(0, 50);
+          cell.innerHTML = truncatedValue; // Verwende innerHTML, um Listen-Tags zu rendern
+          // Füge einen Klick-Eventlistener hinzu, um den erweiterten Zustand zu toggeln
+          cell.addEventListener("click", () => {
+            if (cell.classList.contains("expanded")) {
+              cell.innerHTML = truncatedValue;
+              cell.classList.remove("expanded"); // Entferne die "expanded"-Klasse
+            } else {
+              cell.innerHTML = obj[key];
+              cell.classList.add("expanded"); // Füge die "expanded"-Klasse hinzu
+            }
+          });
+        }
         row.appendChild(cell);
       }
     }
-    table.appendChild(row);
+    container.appendChild(row);
   });
 }
 
 // Funktion zum Exportieren einer HTML-Tabelle als PDF
 function exportToPdf() {
   // Schritt 1: HTML-Tabelle aus dem DOM abrufen
-  var tableHtml = document.getElementById("myTable").outerHTML; // Änderung hier
+  var tableHtml = document.getElementById("myContainer").outerHTML; // Änderung hier
 
   // Schritt 2: Stil für die PDF-Darstellung definieren
   var style = `
