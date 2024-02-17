@@ -89,11 +89,21 @@ td {
   overflow: hidden; /* Hide overflow content */
   text-overflow: ellipsis; /* Show ellipsis for truncated text */
   cursor: pointer; /* Add cursor pointer for expandable cells */
+  min-width: 200px;
   max-width: 500px;
-  height: 50px;
+  height: 50px !important;
 }
 td.expanded {
   white-space: normal; /* Allow text to wrap in expanded state */
   overflow: visible; /* Show full content */
   text-overflow: initial; /* Disable ellipsis */
 }
+/* Alternate row background color */
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Hover effect */
+/* td:hover {
+  background-color: #e0e0e0;
+} */

@@ -7,23 +7,19 @@ async function fetchData() {
     "leistungsschluessel"
   ).value;
   const params = {
-    //regionalSchluessel: "057620012012",
     leistungsSchluessel: leistungsschluessel,
-    //sprache: "DE",
   };
 
   try {
-    let response;
-
+    const response = await fetch(
+      /[a-zA-Z]|§/.test(leistungsschluessel)
+        ? `${apiUrlsearch}?q=${new URLSearchParams(params)}`
+        : `${apiUrl}${new URLSearchParams(params)}`
+    );
+    const data = await response.json();
     if (/[a-zA-Z]|§/.test(leistungsschluessel) === true) {
-      response = await fetch(
-        `${apiUrlsearch}?q=${new URLSearchParams(params)}`
-      );
-      const data = await response.json();
       buildTable2(data);
     } else {
-      response = await fetch(`${apiUrl}${new URLSearchParams(params)}`);
-      const data = await response.json();
       const result = convert(data);
       buildTable2(result);
       const tableHeaders = document.getElementsByTagName("th");
@@ -36,11 +32,6 @@ async function fetchData() {
   }
 }
 
-// Antwort im HTML-Dokument anzeigen
-function displayResponse(data) {
-  const formattedResponse = JSON.stringify(data, null, 2);
-  document.getElementById("api-response").innerText = formattedResponse;
-}
 // Diese Funktion konvertiert ein Objekt (data) in eine HTML-Tabelle.
 function convert(data) {
   var result = []; // Ein leeres Array, in das wir die Daten umwandeln werden.
@@ -56,31 +47,6 @@ function convert(data) {
 function clearResponse() {
   //document.getElementById('api-response').innerText = '';
   location.reload();
-}
-
-function stripHtmlFrom2DArray(array) {
-  // Iteriere über jedes Element im äußeren Array
-  if (array.length === 0) {
-    const myHeading = document.getElementById("Error");
-    myHeading.textContent = "Fehlerhafte LEIKA";
-  } else {
-    const myHeading = document.getElementById("Error");
-    myHeading.textContent = "";
-    for (let i = 0; i < array.length; i++) {
-      // Überprüfe, ob das Element ein Array ist
-      if (Array.isArray(array[i])) {
-        // Iteriere über jedes Element im inneren Array
-        for (let j = 0; j < array[i].length; j++) {
-          // Überprüfe, ob das innere Element ein String ist
-          if (typeof array[i][j] === "string") {
-            // Entferne HTML-Tags aus dem String
-            array[i][j] = array[i][j].replace(/<[^>]*>|&#xa0;/g, "");
-          }
-        }
-      }
-    }
-    return array;
-  }
 }
 
 function buildTable2(data) {
