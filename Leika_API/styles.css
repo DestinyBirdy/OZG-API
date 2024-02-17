@@ -1,10 +1,33 @@
 /* Allgemeine Stile */
 body {
   font-family: Arial, sans-serif;
-  margin: 0 auto; /* Zentriert den Inhalt horizontal */
   padding: 0;
   background-color: #f5f5f5;
-  max-width: 90%; /* Begrenzt die Breite des Inhalts auf 90% */
+}
+
+/* Add your modern navigation bar styles here */
+/* For demonstration purposes, I'll create a full-width top navigation bar */
+.navbar {
+  background-color: #333;
+  overflow: hidden;
+  width: 100%;
+  margin: 0 auto; /* Expand to full width */
+  position: fixed;
+  top: 0;
+}
+
+.navbar a {
+  float: left;
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.navbar a:hover {
+  background-color: #ddd;
+  color: black;
 }
 
 h1,
@@ -16,23 +39,28 @@ h2 {
 p {
   font-size: 16px;
   color: #666;
-  margin: 0;
-  line-height: 1.5; /* Verbessert den Zeilenabstand */
+  margin: auto;
+  line-height: 1.5;
 }
 
-input[type="text"] {
-  width: 100%;
+input[type="text"],
+button {
+  margin: 0;
+  display: inline-block; /* Display elements in the same row */
   padding: 10px;
   font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
 
+input[type="text"] {
+  width: 20%; /* Adjust to fit content */
+}
+
 button {
   background-color: #007bff;
   color: #fff;
   border: none;
-  padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
   border-radius: 5px;
@@ -50,18 +78,18 @@ table {
   table-layout: auto;
   border-collapse: collapse;
   overflow-x: scroll;
-  display: block;
 }
 th,
 td {
-  padding: 10px;
+  padding: 0px;
   border: 1px solid #ddd;
   text-align: left;
   white-space: nowrap; /* Prevent text from wrapping */
   overflow: hidden; /* Hide overflow content */
   text-overflow: ellipsis; /* Show ellipsis for truncated text */
   cursor: pointer; /* Add cursor pointer for expandable cells */
-  max-width: 600px;
+  max-width: 500px;
+  height: 10px;
 }
 td.expanded {
   white-space: normal; /* Allow text to wrap in expanded state */

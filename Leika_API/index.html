@@ -7,25 +7,22 @@
     <script src="logic.js"></script>
     <title>Leika API Anbindung</title>
   </head>
-
   <body>
+    <div class="navbar">
+      <a onclick="clearResponse()" href="#">Home</a>
+      <a href="Zufi.html">Zufi Abfrage</a>
+      <a href="#" onclick="exportToPdf()">Download</a>
+    </div>
     <h1>Leika API Abfrage</h1>
     <h2 id="Error"></h2>
-    <p>
-      Gib den Leistungsschlüssel ein:
-      <input type="text" id="leistungsschluessel" />
-    </p>
-    <form action="#" name="languageForm"></form>
+    <p>Gib den Leistungsschlüssel ein:</p>
+    <input type="text" id="leistungsschluessel" />
+
     <button onclick="fetchData()">Daten von der API abrufen</button>
     <button onclick="clearResponse()">Antwort löschen</button>
-    <button id="3" onclick="window.location = 'Zufi.html';">
-      Zufi Abfrage
-    </button>
-    <button onclick="exportToPdf()">Donwload</button>
-    <div class="scrollable-table">
-      <table id="myTable">
-        <!-- Your table content will be dynamically generated -->
-      </table>
-    </div>
+
+    <table id="myTable">
+      <!-- Your table content will be dynamically generated -->
+    </table>
   </body>
 </html>
