@@ -60,12 +60,23 @@ function buildTable2(data, check) {
   // Erstelle die Überschriftenzeile
   const headerRow = document.createElement("div");
   headerRow.classList.add("header-row"); // Füge eine CSS-Klasse hinzu, um das Styling zu steuern
+
   for (const key in myArray[0]) {
     if (myArray[0].hasOwnProperty(key)) {
       const headerCell = document.createElement("div");
       headerCell.classList.add("header-cell"); // Füge eine CSS-Klasse hinzu
-      headerCell.textContent = key;
+
+      // Check if it's the first or second header cell
+      if (key === Object.keys(myArray[0])[0]) {
+        headerCell.textContent = checkLeika ? "Test" : key;
+      } else if (key === Object.keys(myArray[0])[1]) {
+        headerCell.textContent = checkLeika ? "Inhalt" : key;
+      } else {
+        headerCell.textContent = key;
+      }
+
       headerRow.appendChild(headerCell);
+      console.log(headerCell);
     }
   }
   container.appendChild(headerRow);
@@ -73,33 +84,56 @@ function buildTable2(data, check) {
   // Erstelle für jedes Objekt eine Zeile
   myArray.forEach((obj) => {
     const row = document.createElement("div");
-    row.classList.add("data-row"); // Füge eine CSS-Klasse hinzu
+    row.classList.add("data-row"); // Add a CSS class
 
     for (const key in obj) {
       if (obj.hasOwnProperty(key)) {
         const cell = document.createElement("div");
-        cell.classList.add("data-cell"); // Füge eine CSS-Klasse hinzu
-        cell.style.whiteSpace = "nowrap";
-        // Begrenze den Zelleninhalt auf maximal 10 Zeichen
+        cell.classList.add("data-cell"); // Add a CSS class
+        cell.style.position = "relative"; // Set position to relative
+
+        // Limit the cell content to a maximum of 10 characters
         if (checkLeika) {
           cell.innerHTML = obj[key];
         } else {
+          cell.style.whiteSpace = "nowrap";
           const truncatedValue = obj[key].toString().substring(0, 50);
-          cell.innerHTML = truncatedValue; // Verwende innerHTML, um Listen-Tags zu rendern
-          // Füge einen Klick-Eventlistener hinzu, um den erweiterten Zustand zu toggeln
-          cell.addEventListener("click", () => {
-            if (cell.classList.contains("expanded")) {
-              cell.innerHTML = truncatedValue;
-              cell.classList.remove("expanded"); // Entferne die "expanded"-Klasse
-            } else {
-              cell.innerHTML = obj[key];
-              cell.classList.add("expanded"); // Füge die "expanded"-Klasse hinzu
-            }
-          });
+          cell.innerHTML = truncatedValue; // Use innerHTML to render list tags
+
+          // Add an expandable indicator (e.g., a small arrow) only if the cell content is truncated
+          if (obj[key].length > 50) {
+            const indicator = document.createElement("span");
+            indicator.classList.add("expand-indicator"); // Add a CSS class for styling
+            indicator.innerHTML = "▶"; // Unicode arrow right symbol
+            // Position the indicator at the bottom right corner within the cell
+            indicator.style.position = "absolute";
+            indicator.style.bottom = "0";
+            indicator.style.right = "0";
+            indicator.style.fontSize = "12px";
+
+            // Append the indicator to the cell
+            cell.appendChild(indicator);
+            // Toggle expanded state on click
+            cell.addEventListener("click", () => {
+              if (cell.classList.contains("expanded")) {
+                cell.innerHTML = truncatedValue;
+                cell.classList.remove("expanded");
+                indicator.innerHTML = "▶";
+                cell.appendChild(indicator);
+              } else {
+                cell.innerHTML = obj[key];
+                cell.classList.add("expanded");
+                indicator.innerHTML = "▼";
+                cell.appendChild(indicator); // Change arrow to downward when expanded
+              }
+            });
+          }
         }
+
         row.appendChild(cell);
       }
     }
+
     container.appendChild(row);
   });
 }
@@ -107,18 +141,15 @@ function buildTable2(data, check) {
 // Funktion zum Exportieren einer HTML-Tabelle als PDF
 function exportToPdf() {
   // Schritt 1: HTML-Tabelle aus dem DOM abrufen
-  var tableHtml = document.getElementById("myContainer").outerHTML; // Änderung hier
+  var tableHtml = document.getElementById("myContainer").innerHTML;
 
   // Schritt 2: Stil für die PDF-Darstellung definieren
   var style = `
       <style>
-          table {
+          div {
               width: 100%;
               font: 12px Calibri;
-          }
-          table, th, td {
               border: solid 1px #DDD;
-              border-collapse: collapse;
               padding: 2px 3px;
               text-align: justify;
           }
