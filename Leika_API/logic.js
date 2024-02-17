@@ -109,12 +109,8 @@ function buildTable2(data) {
     for (const key in obj) {
       if (obj.hasOwnProperty(key)) {
         const cell = document.createElement("td");
-        const cleanedContent = obj[key].toString(); // Remove non-breaking spaces
 
-        // Preserve list tags
-        const parsedContent = cleanedContent;
-        console.log(parsedContent);
-        cell.innerHTML = parsedContent; // Use innerHTML to render list tags
+        cell.innerHTML = obj[key]; // Use innerHTML to render list tags
         cell.addEventListener("click", () => {
           cell.classList.toggle("expanded"); // Toggle expanded state
         });

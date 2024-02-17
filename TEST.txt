@@ -1,0 +1,21 @@
+ myArray.forEach((obj) => {
+    const row = document.createElement("tr");
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        const cell = document.createElement("td");
+        const value = obj[key].toString();
+
+        const formattedText = value
+          .replace(/<li>/g, "\n• ")
+          .replace(/<\/li>/g, "");
+        console.log(formattedText);
+        cell.innerHTML = formattedText.trim(); // Use innerHTML to render list tags
+        cell.addEventListener("click", () => {
+          cell.classList.toggle("expanded"); // Toggle expanded state
+        });
+        row.appendChild(cell);
+      }
+    }
+    table.appendChild(row);
+  });
+}
