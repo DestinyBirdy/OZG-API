@@ -53,3 +53,20 @@ function buildTable2(data) {
 
   table.appendChild(scrollButton);
 }
+
+
+
+
+
+
+2D arrays können gecalled werden mittels myArray[x][y]
+Object Arrays können gecalled werden mit dem Object (0 bis ....) und den Key sprich dem Schlüssel argument: data[0].Bearbeitungsdauert
+
+      console.log(Object.entries(data));
+      console.log(Object.keys(data[1]));
+      console.log(
+        Object.keys(data),
+        Object.values(data),
+        Object.keys(data[1]),
+        Object.values(data[1])
+      );

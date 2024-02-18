@@ -63,20 +63,27 @@ function buildTable2(data, check) {
 
   for (const key in myArray[0]) {
     if (myArray[0].hasOwnProperty(key)) {
+      // Create a new div element for the header cell
       const headerCell = document.createElement("div");
-      headerCell.classList.add("header-cell"); // Füge eine CSS-Klasse hinzu
+      headerCell.classList.add("header-cell"); // Add a CSS class to the header cell
 
-      // Check if it's the first or second header cell
-      if (key === Object.keys(myArray[0])[0]) {
-        headerCell.textContent = checkLeika ? "Test" : key;
-      } else if (key === Object.keys(myArray[0])[1]) {
-        headerCell.textContent = checkLeika ? "Inhalt" : key;
-      } else {
-        headerCell.textContent = key;
+      // Use a switch statement to set the text content of the header cell
+      switch (key) {
+        case Object.keys(myArray[0])[0]:
+          // If checkLeika is true, display "Stammtext"; otherwise, display the key
+          headerCell.textContent = checkLeika ? "Stammtext" : key;
+          break;
+        case Object.keys(myArray[0])[1]:
+          // If checkLeika is true, display "Inhalt"; otherwise, display the key
+          headerCell.textContent = checkLeika ? "Inhalt" : key;
+          break;
+        default:
+          // For other keys, simply display the key itself
+          headerCell.textContent = key;
       }
 
+      // Append the header cell to the header row
       headerRow.appendChild(headerCell);
-      console.log(headerCell);
     }
   }
   container.appendChild(headerRow);
