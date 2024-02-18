@@ -19,6 +19,7 @@ async function fetchData() {
     const data = await response.json();
     if (/[a-zA-Z]|§/.test(leistungsschluessel) === true) {
       buildTable2(data, false);
+      console.log(data);
     } else {
       const result = convert(data);
       buildTable2(result, true);
@@ -104,7 +105,13 @@ function buildTable2(data, check) {
           cell.innerHTML = obj[key];
         } else {
           cell.style.whiteSpace = "nowrap";
-          const truncatedValue = obj[key].toString().substring(0, 50);
+          const truncatedValue = obj[key]
+            .toString()
+            .replace(
+              /<figure class="table">|<\/figure>|<table>|\r|\n|\t|&nbsp;|<p>|<\/p>|<\/table>|<tbody>|<\/tbody>|<tr>|<\/tr>|<td>|<\/td>/g,
+              ""
+            )
+            .substring(0, 50);
           cell.innerHTML = truncatedValue; // Use innerHTML to render list tags
 
           // Add an expandable indicator (e.g., a small arrow) only if the cell content is truncated
@@ -128,7 +135,12 @@ function buildTable2(data, check) {
                 indicator.innerHTML = "▶";
                 cell.appendChild(indicator);
               } else {
-                cell.innerHTML = obj[key];
+                cell.innerHTML = obj[key]
+                  .toString()
+                  .replace(
+                    /<figure class="table">|<\/figure>|<table>|\r|\n|\t|&nbsp;|<\/table>|<tbody>|<\/tbody>|<tr>|<\/tr>|<td>|<\/td>/g,
+                    ""
+                  );
                 cell.classList.add("expanded");
                 indicator.innerHTML = "▼";
                 cell.appendChild(indicator); // Change arrow to downward when expanded
