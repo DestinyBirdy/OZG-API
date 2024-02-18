@@ -88,7 +88,7 @@ function buildTable2(data, check) {
     }
   }
   container.appendChild(headerRow);
-
+  console.log("Test");
   // Erstelle für jedes Objekt eine Zeile
   myArray.forEach((obj) => {
     const row = document.createElement("div");
