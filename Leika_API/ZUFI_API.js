@@ -1,6 +1,7 @@
 const zufi_api = "https://zufi.api.vsm.nrw/zustaendigkeiten";
-
-async function fetchData() {
+const leika_api = "https://leika.vsm.nrw/services/";
+//Fetch Zufi API Data
+async function fetchDataZufi() {
   const leistungsschluessel = document.getElementById(
     "leistungsschluessel"
   ).value;
@@ -12,16 +13,64 @@ async function fetchData() {
 
   try {
     const response = await fetch(`${zufi_api}?${new URLSearchParams(params)}`);
-    const data = await response.json();
+    const zufiData = await response.json();
     const mytable = document.createElement("table");
-    // removeTable(mytable);
-    getKey(data, mytable);
+
+    getZufi(zufiData, mytable);
+  } catch (error) {
+    console.error("Fehler beim Abrufen der Daten:", error);
+  }
+}
+//Fetch Leika API Data
+async function fetchDataLeika() {
+  const leistungsschluessel = document.getElementById(
+    "leistungsschluessel"
+  ).value;
+  const params = {
+    leistungsSchluessel: leistungsschluessel,
+  };
+
+  try {
+    const response = await fetch(`${leika_api}${new URLSearchParams(params)}`);
+    const leikaData = await response.json();
+    const mytable = document.createElement("table");
+
+    getLeika(leikaData, mytable);
   } catch (error) {
     console.error("Fehler beim Abrufen der Daten:", error);
   }
 }
 
-function getKey(data, mytable) {
+//Leika API processing function
+function getLeika(leikaData, mytable) {
+  document.getElementById("status").innerText = "LeiKa Abfrage";
+  const table = mytable;
+  table.style.borderCollapse = "collapse";
+
+  const thead = document.querySelector("thead"); // Assuming the table already has a <thead> element
+  const tbody = document.querySelector("tbody");
+  while (tbody.firstChild) {
+    tbody.removeChild(tbody.firstChild);
+  }
+  for (const key in leikaData) {
+    const row = document.createElement("tr");
+    const keyCell = document.createElement("td");
+    keyCell.textContent = key;
+    keyCell.style.border = "1px solid #ddd"; // Add this line for cell borders
+    const valueCell = document.createElement("td");
+    const value = leikaData[key];
+
+    valueCell.innerHTML = value;
+
+    valueCell.style.border = "1px solid #ddd"; // Add this line for cell borders
+    row.appendChild(keyCell);
+    row.appendChild(valueCell);
+    tbody.appendChild(row);
+  }
+}
+//Zufi API processing function
+function getZufi(zufiData, mytable) {
+  document.getElementById("status").innerText = "xZuFi Abfrage";
   const table = mytable;
   table.style.borderCollapse = "collapse"; // Add this line for table border collapse
 
@@ -30,13 +79,13 @@ function getKey(data, mytable) {
   while (tbody.firstChild) {
     tbody.removeChild(tbody.firstChild);
   }
-  for (const key in data.leistungStammtext) {
+  for (const key in zufiData.leistungStammtext) {
     const row = document.createElement("tr");
     const keyCell = document.createElement("td");
     keyCell.textContent = key;
     keyCell.style.border = "1px solid #ddd"; // Add this line for cell borders
     const valueCell = document.createElement("td");
-    const value = data.leistungStammtext[key];
+    const value = zufiData.leistungStammtext[key];
 
     if (Array.isArray(value)) {
       for (const subValue of value) {

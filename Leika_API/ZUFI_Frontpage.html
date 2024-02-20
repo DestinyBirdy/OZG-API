@@ -13,12 +13,12 @@
       <a href="index.html">Leika Abfrage</a>
       <a href="#" onclick="exportToPdf()">Download</a>
     </div>
-    <h1>xZuFi API Abfrage</h1>
-    <h2 id="Error"></h2>
+    
+    <h1 id="status">API Abfrage</h2>
     <p>Gib den Leistungsschlüssel ein:</p>
     <input type="text" id="leistungsschluessel" />
-    <button onclick="fetchData()">ZUFI Abfragen</button>
-    <button onclick="clearResponse()">Antwort löschen</button>
+    <button onclick="fetchDataZufi()">ZUFI Abfragen</button>
+    <button onclick="fetchDataLeika()">Switch</button>
     <table id="myTable">
       <body>
 
