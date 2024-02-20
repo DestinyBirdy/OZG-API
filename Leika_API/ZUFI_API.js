@@ -101,7 +101,11 @@ function getZufi(zufiData, mytable) {
           const br = document.createElement("br");
           valueCell.appendChild(br);
         } else {
-          valueCell.textContent += subValue + ", ";
+          if (subValue.endsWith(" ")) {
+            valueCell.textContent += subValue.trim() + ", ";
+          } else {
+            valueCell.textContent += subValue + ", ";
+          }
         }
       }
     } else {
