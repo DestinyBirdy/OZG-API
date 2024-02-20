@@ -24,6 +24,7 @@ async function fetchData() {
       const result = convert(data);
       buildTable2(result, true);
       const tableHeaders = document.getElementsByTagName("th");
+      console.log(data);
       //tableHeaders[0].innerHTML = "Stammtext";
       //tableHeaders[1].innerHTML = "Inhalt";
     }

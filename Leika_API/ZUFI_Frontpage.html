@@ -4,11 +4,33 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="ZUFI_API.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
     <title>ZUFI API</title>
   </head>
   <body>
+    <div class="navbar">
+      <a onclick="clearResponse()" href="#">Home</a>
+      <a href="index.html">Leika Abfrage</a>
+      <a href="#" onclick="exportToPdf()">Download</a>
+    </div>
+    <h1>xZuFi API Abfrage</h1>
+    <h2 id="Error"></h2>
+    <p>Gib den Leistungsschlüssel ein:</p>
     <input type="text" id="leistungsschluessel" />
     <button onclick="fetchData()">ZUFI Abfragen</button>
     <button onclick="clearResponse()">Antwort löschen</button>
+    <table id="myTable">
+      <body>
+
+      <thead>
+        <tr>
+          <th>Stammtext</th>
+          <th>Inhalt</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Your table rows will be dynamically added here using JavaScript -->
+      </tbody>
+    </table>
   </body>
 </html>
