@@ -15,7 +15,8 @@ async function fetchDataZufi() {
     const response = await fetch(`${zufi_api}?${new URLSearchParams(params)}`);
     const zufiData = await response.json();
     const mytable = document.createElement("table");
-
+    document.getElementById("1").innerText = "Stammtext";
+    document.getElementById("2").innerText = "Inhalt";
     getZufi(zufiData, mytable);
   } catch (error) {
     console.error("Fehler beim Abrufen der Daten:", error);
@@ -34,7 +35,8 @@ async function fetchDataLeika() {
     const response = await fetch(`${leika_api}${new URLSearchParams(params)}`);
     const leikaData = await response.json();
     const mytable = document.createElement("table");
-
+    document.getElementById("1").innerText = "Stammtext";
+    document.getElementById("2").innerText = "Inhalt";
     getLeika(leikaData, mytable);
   } catch (error) {
     console.error("Fehler beim Abrufen der Daten:", error);

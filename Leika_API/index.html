@@ -1,28 +1,36 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="ZUFI_API.js"></script>
     <link rel="stylesheet" type="text/css" href="styles.css" />
-    <script src="logic.js"></script>
-    <title>Leika API Anbindung</title>
+    <title>ZUFI API</title>
   </head>
   <body>
     <div class="navbar">
       <a onclick="clearResponse()" href="#">Home</a>
-      <a href="ZUFI_Frontpage.html">Zufi Abfrage</a>
+      <a href="Leika_Page.html">Leika Abfrage</a>
       <a href="#" onclick="exportToPdf()">Download</a>
     </div>
-    <h1>Leika API Abfrage</h1>
-    <h2 id="Error"></h2>
+    
+    <h1 id="status">API Abfrage</h2>
     <p>Gib den Leistungsschlüssel ein:</p>
     <input type="text" id="leistungsschluessel" />
+    <button onclick="fetchDataZufi()">ZUFI Abfragen</button>
+    <button onclick="fetchDataLeika()">LeiKa Abfragen</button>
+    <table id="myTable">
+      <body>
 
-    <button onclick="fetchData()">Daten von der API abrufen</button>
-    <button onclick="clearResponse()">Antwort löschen</button>
-
-    <div class="table-container" id="myContainer">
-      <!-- Hier wird der Inhalt dynamisch generiert -->
-    </div>
+      <thead>
+        <tr>
+          <th id="1"></th>
+          <th id="2"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Your table rows will be dynamically added here using JavaScript -->
+      </tbody>
+    </table>
   </body>
 </html>

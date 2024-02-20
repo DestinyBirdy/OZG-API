@@ -93,3 +93,6 @@ button:hover {
 .data-row {
   display: table-row;
 }
+table {
+  text-align: left;
+}
