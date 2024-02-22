@@ -1,6 +1,7 @@
 // API-Endpunkt
 const apiUrl = "https://leika.vsm.nrw/services/";
 const apiUrlsearch = "https://leika.vsm.nrw/services";
+
 // Eine GET-Anfrage an die API senden
 async function fetchData() {
   const leistungsschluessel = document.getElementById(
