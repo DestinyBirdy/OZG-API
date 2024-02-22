@@ -47,7 +47,7 @@ body.dark-mode p {
 h1,
 h2 {
   text-align: center;
-  padding: 30px;
+  margin-top: 100px;
 }
 
 p {
@@ -88,4 +88,5 @@ button:hover {
 table {
   text-align: left;
   padding-top: 30;
+  margin-top: 15px;
 }
