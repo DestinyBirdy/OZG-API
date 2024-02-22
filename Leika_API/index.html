@@ -4,32 +4,56 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="ZUFI_API.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
     <link rel="stylesheet" type="text/css" href="styles.css" />
     <title>ZUFI API</title>
   </head>
   <body>
     <div class="navbar">
       <a onclick="clearResponse()" href="#">Home</a>
-      <a href="#" onclick="exportToPdf()">Download</a>
+      <!-- <a href="#" onclick="downloadTableAsPDF()">Download</a> -->
+      <button
+        id="darkModeButton"
+        style="
+          float: right;
+          background-image: url('dark-mode-svgrepo-com(1).svg');
+          background-color: transparent;
+          background-size: contain;
+          background-repeat: no-repeat;
+          padding-left: 30px;
+          filter: invert(100%);
+        "
+      ></button>
     </div>
-    
-    <h1 id="status">API Abfrage</h2>
+
+    <h1 id="status">API Abfrage</h1>
     <p>Gib den Leistungsschlüssel ein:</p>
     <input type="text" id="leistungsschluessel" />
     <button onclick="fetchDataZufi()">ZUFI Abfragen</button>
     <button onclick="fetchDataLeika()">LeiKa Abfragen</button>
-    <table id="myTable">
-      <body>
 
-      <thead>
-        <tr>
-          <th id="1"></th>
-          <th id="2"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Your table rows will be dynamically added here using JavaScript -->
-      </tbody>
-    </table>
+    <div id="myContainer">
+      <table id="myTable">
+        <thead>
+          <tr>
+            <th id="1"></th>
+            <th id="2"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Your table rows will be dynamically added here using JavaScript -->
+        </tbody>
+      </table>
+    </div>
+
+    <script>
+      const darkModeButton = document.getElementById("darkModeButton");
+      const body = document.body;
+
+      darkModeButton.addEventListener("click", () => {
+        body.classList.toggle("dark-mode");
+      });
+    </script>
   </body>
 </html>

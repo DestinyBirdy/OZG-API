@@ -180,3 +180,43 @@ function createAndAppendCell(row, value) {
   cell.style.border = "1px solid #ddd";
   row.appendChild(cell);
 }
+
+// function downloadTableAsPDF() {
+//   // Open a new window for printing
+//   const printWindow = window.open("", "_blank");
+//   printWindow.document.open();
+
+//   // Create a printable version of the table
+//   const tableHtml = document.getElementById("myTable").innerText;
+//   const printableContent = `
+//                 <html>
+//                 <head>
+//                     <style>
+//                         /* Add any additional styling for printing here */
+//                         table {
+//                             border-collapse: collapse;
+//                             width: 100%;
+//                         }
+//                         th, td {
+//                             border: 1px solid #000;
+//                             padding: 8px;
+//                             text-align: left;
+//                         }
+//                     </style>
+//                 </head>
+//                 <body>
+//                     ${tableHtml}
+//                 </body>
+//                 </html>
+//             `;
+
+//   // Write the printable content to the new window
+//   printWindow.document.write(printableContent);
+//   printWindow.document.close();
+
+//   // Wait for the content to load, then print
+//   printWindow.onload = function () {
+//     printWindow.print();
+//     printWindow.close();
+//   };
+// }
