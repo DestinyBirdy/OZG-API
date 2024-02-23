@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="styles.css" />
     <title>ZUFI API</title>
   </head>
-  <body>
+  <div>
     <div class="navbar">
       <a onclick="clearResponse()" href="#">Home</a>
       <!-- <a href="#" onclick="downloadTableAsPDF()">Download</a> -->
@@ -28,11 +28,18 @@
     </div>
 
     <h1 id="status">API Abfrage</h1>
-    <p>Gib den Leistungsschlüssel ein:</p>
+  <div class="searchbar">
+    <div class="apiRadioButtons">
+      <label>
+          <input type="radio" name="apiSelection" value="leika"> LeiKa-API
+      </label>
+      <label>
+        <input type="radio" name="apiSelection" value="zufi" checked> ZuFi-API
+      </label>
+  </div>
     <input type="text" id="leistungsschluessel" />
-    <button onclick="fetchDataZufi()">ZUFI Abfragen</button>
-    <button onclick="fetchDataLeika()">LeiKa Abfragen</button>
-
+    <button onclick="fetchData()">Go</button>
+  </div>
     <div id="myContainer">
       <table id="myTable">
         <thead>
@@ -54,6 +61,14 @@
       darkModeButton.addEventListener("click", () => {
         body.classList.toggle("dark-mode");
       });
+      function fetchData() {
+            const selectedApi = document.querySelector('input[name="apiSelection"]:checked').value;
+            if (selectedApi === "zufi") {
+                fetchDataZufi();
+            } else if (selectedApi === "leika") {
+                fetchDataLeika();
+            }
+        }
     </script>
   </body>
 </html>

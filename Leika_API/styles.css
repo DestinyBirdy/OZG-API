@@ -88,5 +88,14 @@ button:hover {
 table {
   text-align: left;
   padding-top: 30;
-  margin-top: 15px;
+  /* margin-top: 15px; */
+}
+
+.searchbar {
+  text-align: center;
+}
+.apiDropdown select {
+  width: 22.5%; /* Set the dropdown width to 100% */
+  box-sizing: border-box;
+  padding-bottom: ; /* Include padding and border in the width calculation */
 }

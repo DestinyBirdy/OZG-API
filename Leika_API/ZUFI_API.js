@@ -22,8 +22,10 @@ async function fetchDataZufi(optionalKeyID) {
     const response = await fetch(`${zufi_api}?${new URLSearchParams(params)}`);
     const zufiData = await response.json();
     const mytable = document.createElement("table");
-    document.getElementById("1").innerText = "Stammtext";
-    document.getElementById("2").innerText = "Inhalt";
+    if (leistungsschluessel !== "") {
+      document.getElementById("1").innerText = "Stammtext";
+      document.getElementById("2").innerText = "Inhalt";
+    }
     getZufi(zufiData, mytable);
   } catch (error) {
     console.error("Fehler beim Abrufen der Daten:", error);
@@ -49,8 +51,10 @@ async function fetchDataLeika() {
     if (/[a-zA-Z]|§/.test(leistungsschluessel) === true) {
       getLeikaKeyword(leikaData, mytable);
     } else {
-      document.getElementById("1").innerText = "Stammtext";
-      document.getElementById("2").innerText = "Inhalt";
+      if (leistungsschluessel !== "") {
+        document.getElementById("1").innerText = "Stammtext";
+        document.getElementById("2").innerText = "Inhalt";
+      }
       getLeika(leikaData, mytable);
     }
   } catch (error) {
