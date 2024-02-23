@@ -119,8 +119,8 @@ function getLeikaKeyword(leikaData, mytable) {
 
     // Attach the click event listener to the row
     row.addEventListener("click", handleRowClick);
-
     tbody.appendChild(row);
+    row.style.cursor = "pointer";
   }
 }
 

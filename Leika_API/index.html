@@ -37,7 +37,7 @@
         <input type="radio" name="apiSelection" value="zufi" checked> ZuFi-API
       </label>
   </div>
-    <input type="text" id="leistungsschluessel" />
+    <input type="text" id="leistungsschluessel" placeholder="Leistungsschlüssel"/>
     <!-- <button onclick="fetchData()">Go</button> -->
   </div>
     <div id="myContainer">
@@ -64,7 +64,11 @@
       function fetchData() {
             const selectedApi = document.querySelector('input[name="apiSelection"]:checked').value;
             if (selectedApi === "zufi") {
-                fetchDataZufi();
+              const isText = document.getElementById("leistungsschluessel").value;
+              if (/[a-zA-Z§]/.test(isText)) {
+              fetchDataLeika();
+              } else {
+                fetchDataZufi();}
             } else if (selectedApi === "leika") {
                 fetchDataLeika();
             }
