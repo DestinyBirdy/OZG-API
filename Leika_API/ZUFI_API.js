@@ -64,7 +64,7 @@ async function fetchDataLeika() {
 
 //Leika API processing function
 function getLeika(leikaData, mytable) {
-  document.getElementById("status").innerText = "LeiKa Abfrage";
+  document.getElementById("status").innerText = "LeiKa-API";
   const table = mytable;
   table.style.borderCollapse = "collapse";
 
@@ -92,7 +92,7 @@ function getLeika(leikaData, mytable) {
 // Leika API-Keyword processing function
 function getLeikaKeyword(leikaData, mytable) {
   const leikaDataKeyword = leikaData;
-  document.getElementById("status").innerText = "LeiKa Abfrage";
+  document.getElementById("status").innerText = "LeiKa-API";
   const table = mytable;
   table.style.borderCollapse = "collapse";
 
@@ -126,7 +126,7 @@ function getLeikaKeyword(leikaData, mytable) {
 
 //Zufi API processing function
 function getZufi(zufiData, mytable) {
-  document.getElementById("status").innerText = "xZuFi Abfrage";
+  document.getElementById("status").innerText = "ZuFi-API";
   const table = mytable;
   table.style.borderCollapse = "collapse"; // Add this line for table border collapse
 
@@ -184,7 +184,9 @@ function createAndAppendCell(row, value) {
   cell.style.border = "1px solid #ddd";
   row.appendChild(cell);
 }
-
+function clearResponse() {
+  location.reload(true);
+}
 // function downloadTableAsPDF() {
 //   // Open a new window for printing
 //   const printWindow = window.open("", "_blank");

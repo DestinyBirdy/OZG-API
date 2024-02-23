@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="ZUFI_API.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-
+    <link rel="icon" href="ozg-logo-schwarz.png;jsessionid=4ED244FF2D14400DA5453AC3E69641B7.png">
     <link rel="stylesheet" type="text/css" href="styles.css" />
-    <title>ZUFI API</title>
+    <title>OZG-API-Abfrage</title>
   </head>
   <div>
     <div class="navbar">
@@ -27,7 +27,7 @@
       ></button>
     </div>
 
-    <h1 id="status">API Abfrage</h1>
+    <h1 id="status">OZG-API-Abfrage</h1>
   <div class="searchbar">
     <div class="apiRadioButtons">
       <label>
@@ -38,7 +38,7 @@
       </label>
   </div>
     <input type="text" id="leistungsschluessel" />
-    <button onclick="fetchData()">Go</button>
+    <!-- <button onclick="fetchData()">Go</button> -->
   </div>
     <div id="myContainer">
       <table id="myTable">
@@ -69,6 +69,11 @@
                 fetchDataLeika();
             }
         }
+        document.getElementById("leistungsschluessel").addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    fetchData(); // Call your search function here (replace with your actual function name)
+  }
+});
     </script>
   </body>
 </html>

@@ -94,8 +94,3 @@ table {
 .searchbar {
   text-align: center;
 }
-.apiDropdown select {
-  width: 22.5%; /* Set the dropdown width to 100% */
-  box-sizing: border-box;
-  padding-bottom: ; /* Include padding and border in the width calculation */
-}
