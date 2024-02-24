@@ -1,28 +1,31 @@
 const zufi_api = "https://zufi.api.vsm.nrw/zustaendigkeiten";
 const leika_api = "https://leika.vsm.nrw/services/";
 const leika_apiKeyword = "https://leika.vsm.nrw/services/";
+const REGIONAL_SCHLUESSEL = "051170000000";
+const SPRACHE = "DE";
 //Fetch Zufi API Data
 
 async function fetchDataZufi(optionalKeyID) {
-  let leistungsschluessel;
-  leistungsschluessel = document.getElementById("leistungsschluessel").value;
-  console.log(optionalKeyID);
+  const leistungsschluesselElement = document.getElementById(
+    "leistungsschluessel"
+  );
+  let leistungsschluessel = leistungsschluesselElement.value;
+
   if (optionalKeyID !== undefined) {
     leistungsschluessel = optionalKeyID;
-    console.log(leistungsschluessel);
   }
-  console.log(leistungsschluessel);
+
   const params = {
-    regionalSchluessel: "051170000000",
+    regionalSchluessel: REGIONAL_SCHLUESSEL,
     leistungsSchluessel: leistungsschluessel,
-    sprache: "DE",
+    sprache: SPRACHE,
   };
 
   try {
     const response = await fetch(`${zufi_api}?${new URLSearchParams(params)}`);
     const zufiData = await response.json();
-    const mytable = document.createElement("table");
-    console.log(zufiData);
+    const mytable = document.getElementById("myTable");
+
     if (leistungsschluessel !== "") {
       document.getElementById("1").innerText = "Stammtext";
       document.getElementById("2").innerText = "Inhalt";
@@ -37,19 +40,19 @@ async function fetchDataLeika() {
   const leistungsschluessel = document.getElementById(
     "leistungsschluessel"
   ).value;
-  const params = {
-    leistungsSchluessel: leistungsschluessel,
-  };
+  const params = { leistungsSchluessel: leistungsschluessel };
+  const isKeyword = /[a-zA-Z]|§/.test(leistungsschluessel); // Testing if Keyword is a word
 
   try {
     const response = await fetch(
-      /[a-zA-Z]|§/.test(leistungsschluessel)
+      isKeyword
         ? `${leika_apiKeyword}?q=${new URLSearchParams(params)}`
         : `${leika_api}${new URLSearchParams(params)}`
     );
     const leikaData = await response.json();
     const mytable = document.getElementById("myTable");
-    if (/[a-zA-Z]|§/.test(leistungsschluessel) === true) {
+
+    if (isKeyword) {
       getLeikaKeyword(leikaData, mytable);
     } else {
       if (leistungsschluessel !== "") {
@@ -69,7 +72,6 @@ function getLeika(leikaData, mytable) {
   const table = mytable;
   table.style.borderCollapse = "collapse";
 
-  const thead = document.querySelector("thead"); // Assuming the table already has a <thead> element
   const tbody = document.querySelector("tbody");
   while (tbody.firstChild) {
     tbody.removeChild(tbody.firstChild);
