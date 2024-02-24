@@ -12,7 +12,13 @@
   <div>
     <div class="navbar">
       <a onclick="clearResponse()" href="#">Home</a>
-      <a href="#" onclick="downloadTableAsPDF()">Download</a>
+      <div class="dropdown">
+        <button class="dropbtn">Download</button>
+        <div class="dropdown-content">
+          <a onclick="downloadTableAsPDF()" href="#">PDF</a>
+          <a onclick ="tableToCSV()" href="#">CSV</a>
+        </div>
+      </div>
       <button
         id="darkModeButton"
         style="
