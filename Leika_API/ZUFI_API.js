@@ -22,6 +22,7 @@ async function fetchDataZufi(optionalKeyID) {
     const response = await fetch(`${zufi_api}?${new URLSearchParams(params)}`);
     const zufiData = await response.json();
     const mytable = document.createElement("table");
+    console.log(zufiData);
     if (leistungsschluessel !== "") {
       document.getElementById("1").innerText = "Stammtext";
       document.getElementById("2").innerText = "Inhalt";
@@ -47,7 +48,7 @@ async function fetchDataLeika() {
         : `${leika_api}${new URLSearchParams(params)}`
     );
     const leikaData = await response.json();
-    const mytable = document.createElement("table");
+    const mytable = document.getElementById("myTable");
     if (/[a-zA-Z]|§/.test(leistungsschluessel) === true) {
       getLeikaKeyword(leikaData, mytable);
     } else {
@@ -126,12 +127,14 @@ function getLeikaKeyword(leikaData, mytable) {
 
 //Zufi API processing function
 function getZufi(zufiData, mytable) {
+  //Set API Indicator Text
   document.getElementById("status").innerText = "ZuFi-API";
   const table = mytable;
-  table.style.borderCollapse = "collapse"; // Add this line for table border collapse
+  table.style.borderCollapse = "collapse";
 
-  const thead = document.querySelector("thead"); // Assuming the table already has a <thead> element
-  const tbody = document.querySelector("tbody"); // Assuming the table already has a <tbody> element
+  //Calling the thead/tbody from the table
+  const thead = document.querySelector("thead");
+  const tbody = document.querySelector("tbody");
   while (tbody.firstChild) {
     tbody.removeChild(tbody.firstChild);
   }
@@ -171,13 +174,9 @@ function getZufi(zufiData, mytable) {
     row.appendChild(valueCell);
     tbody.appendChild(row);
   }
-
-  table.appendChild(thead);
-  table.appendChild(tbody);
-  document.body.appendChild(table);
 }
 
-//Create Row/Cells Function
+//Create Row/Cells Function fpr the LeiKa-Keyword-Search
 function createAndAppendCell(row, value) {
   const cell = document.createElement("td");
   cell.innerHTML = value;
@@ -187,42 +186,87 @@ function createAndAppendCell(row, value) {
 function clearResponse() {
   location.reload(true);
 }
-// function downloadTableAsPDF() {
-//   // Open a new window for printing
-//   const printWindow = window.open("", "_blank");
-//   printWindow.document.open();
+function downloadTableAsPDF() {
+  // Open a new window for printing
+  const printWindow = window.open("", "_blank");
+  printWindow.document.open();
 
-//   // Create a printable version of the table
-//   const tableHtml = document.getElementById("myTable").innerText;
-//   const printableContent = `
-//                 <html>
-//                 <head>
-//                     <style>
-//                         /* Add any additional styling for printing here */
-//                         table {
-//                             border-collapse: collapse;
-//                             width: 100%;
-//                         }
-//                         th, td {
-//                             border: 1px solid #000;
-//                             padding: 8px;
-//                             text-align: left;
-//                         }
-//                     </style>
-//                 </head>
-//                 <body>
-//                     ${tableHtml}
-//                 </body>
-//                 </html>
-//             `;
+  // Create a printable version of the table
+  const tableHtml = document.getElementById("myTable").outerHTML;
 
-//   // Write the printable content to the new window
-//   printWindow.document.write(printableContent);
-//   printWindow.document.close();
+  const printableContent = `
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <title>My PDF</title>
+    </head>
+    <body>
+      ${tableHtml}
+    </body>
+  </html>
+`;
+  // Write the printable content to the new window
+  printWindow.document.write(printableContent);
+  printWindow.document.close();
 
-//   // Wait for the content to load, then print
-//   printWindow.onload = function () {
-//     printWindow.print();
-//     printWindow.close();
-//   };
+  // Wait for the content to load, then print
+  printWindow.onload = function () {
+    printWindow.print();
+    printWindow.close();
+  };
+}
+
+// function tableToCSV() {
+//   // Variable to store the final csv data
+//   let csv_data = [];
+
+//   // Get each row data
+//   let rows = document.getElementsByTagName("tr");
+//   for (let i = 0; i < rows.length; i++) {
+//     // Get each column data
+//     let cols = rows[i].querySelectorAll("td,th");
+
+//     // Stores each csv row data
+//     let csvrow = [];
+//     for (let j = 0; j < cols.length; j++) {
+//       // Get the text data of each cell
+//       // of a row and push it to csvrow
+//       csvrow.push(cols[j].innerHTML);
+//     }
+
+//     // Combine each column value with comma
+//     csv_data.push(csvrow.join(","));
+//   }
+
+//   // Combine each row data with new line character
+//   csv_data = csv_data.join("\n");
+
+//   // Call this function to download csv file
+//   downloadCSVFile(csv_data);
+// }
+
+// function downloadCSVFile(csv_data) {
+//   // Create CSV file object and feed
+//   // our csv_data into it
+//   CSVFile = new Blob([csv_data], {
+//     type: "text/csv",
+//   });
+
+//   // Create to temporary link to initiate
+//   // download process
+//   let temp_link = document.createElement("a");
+
+//   // Download csv file
+//   temp_link.download = "GfG.csv";
+//   let url = window.URL.createObjectURL(CSVFile);
+//   temp_link.href = url;
+
+//   // This link should not be displayed
+//   temp_link.style.display = "none";
+//   document.body.appendChild(temp_link);
+
+//   // Automatically click the link to
+//   // trigger download
+//   temp_link.click();
+//   document.body.removeChild(temp_link);
 // }
