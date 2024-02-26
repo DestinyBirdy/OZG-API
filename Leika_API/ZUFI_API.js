@@ -195,29 +195,32 @@ function downloadTableAsPDF() {
 
   // Create a printable version of the table
   const tableHtml = document.getElementById("myTable").outerHTML;
+  const printableContent = `${tableHtml}`;
 
-  const printableContent = `
-  <!DOCTYPE html>
-  <html>
-    <head>
-      <title>My PDF</title>
-    </head>
-    <body>
-      ${tableHtml}
-    </body>
-  </html>
-`;
   // Write the printable content to the new window
   printWindow.document.write(printableContent);
   printWindow.document.close();
 
-  // Wait for the content to load, then print
-  printWindow.onload = function () {
-    printWindow.print();
-    printWindow.close();
-  };
+  // Check if the user is using Chrome
+  const isChrome =
+    /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+
+  if (isChrome) {
+    // If the user is using Chrome, use a timeout
+    setTimeout(function () {
+      printWindow.print();
+      printWindow.close();
+    }, 1000); // Adjust this delay as needed
+  } else {
+    // If the user is not using Chrome, print immediately
+    printWindow.onload = function () {
+      printWindow.print();
+      printWindow.close();
+    };
+  }
 }
 
+// Generic function from W3 CSS
 function tableToCSV() {
   // Variable to store the final csv data
   let csv_data = [];
