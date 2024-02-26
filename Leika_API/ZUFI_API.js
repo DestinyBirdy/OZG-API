@@ -210,7 +210,7 @@ function downloadTableAsPDF() {
     setTimeout(function () {
       printWindow.print();
       printWindow.close();
-    }, 1000); // Adjust this delay as needed
+    }, 1000);
   } else {
     // If the user is not using Chrome, print immediately
     printWindow.onload = function () {
