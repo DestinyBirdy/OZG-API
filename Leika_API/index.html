@@ -10,30 +10,32 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <title>OZG-API-Abfrage</title>
   </head>
-  <div>
-    <div class="navbar">
-      <a onclick="clearResponse()" href="#">Home</a>
-      <div class="dropdown">
-        <button class="dropbtn">Download</button>
-        <div class="dropdown-content">
-          <a onclick="downloadTableAsPDF()" href="#">PDF</a>
-          <a onclick ="tableToCSV()" href="#">CSV</a>
-        </div>
+  <div class="navbar">
+    <!-- <a onclick="clearResponse()" href="#">Home</a> --> <!-- Remove this line -->
+    <div class="dropdown">
+      <button class="dropbtn">Download</button>
+      <div class="dropdown-content">
+        <a onclick="downloadTableAsPDF()" href="#">PDF</a>
+        <a onclick ="tableToCSV()" href="#">CSV</a>
       </div>
-      <button
-        id="darkModeButton"
-        style="
-          float: right;
-          background-image: url('dark-mode-svgrepo-com(1).svg');
-          background-color: transparent;
-          background-size: contain;
-          background-repeat: no-repeat;
-          padding-left: 30px;
-          filter: invert(100%);
-        "
-      ></button>
     </div>
-
+    <button
+      id="darkModeButton"
+      style="
+        float: right;
+        background-image: url('dark-mode-svgrepo-com(1).svg');
+        background-color: transparent;
+        background-size: contain;
+        background-repeat: no-repeat;
+        padding-left: 30px;
+        filter: invert(100%);
+      "
+    ></button>
+  </div>
+    <button class="navbar-toggle" style="position: fixed; top: -10px; left: 0; border: none; background: none;" onclick="toggleNavbar()">
+      <img src="burger-menu-svgrepo-com.svg" alt="Toggle Navbar" width="30" height="30">
+    </button>
+    
     <h1 id="status">OZG-API-Abfrage</h1>
   <div class="searchbar">
     <div class="apiRadioButtons">
@@ -84,6 +86,16 @@
     fetchData(); // Call your search function here (replace with your actual function name)
   }
 });
+
+function toggleNavbar() {
+  var navbar = document.querySelector('.navbar');
+  var toggleButton = document.querySelector('.navbar-toggle');
+  var image = toggleButton.querySelector('img'); // Select the image inside the 'navbar-toggle' button
+
+  navbar.classList.toggle('open');
+  toggleButton.classList.toggle('open');
+  image.classList.toggle('inverted'); // Toggle the 'inverted' class
+}
     </script>
   </body>
 </html>

@@ -12,17 +12,30 @@ body.dark-mode {
 body.dark-mode p {
   color: #f4f4f5; /* Set the text color to white */
 }
-/* Dark mode styles */
 
 .navbar {
   background-color: #3f3f46;
+  width: 200px; /* Adjust the width of the sidebar */
+  height: 10%; /* Make it full height */
+  position: fixed;
+  top: 0;
+  left: -200px; /* Start off the screen */
+  border-bottom-right-radius: 15px;
+}
 
-  width: 100%;
+.navbar.open {
+  left: 0; /* Bring it on screen when open */
+}
+.navbar-toggle {
   position: fixed;
   top: 0;
   left: 0;
+  border: none;
+  background: none;
 }
-
+.navbar.open .navbar-toggle {
+  left: 200px; /* Move it to the right when the navbar is open */
+}
 /* Style the navigation links */
 .navbar a {
   float: left;
@@ -43,7 +56,9 @@ body.dark-mode p {
 .navbar a.active {
   color: #f4f4f5;
 }
-
+.inverted {
+  filter: invert(1);
+}
 h1,
 h2 {
   text-align: center;
@@ -98,24 +113,31 @@ table {
 .dropbtn {
   background-color: #3f3f46;
   color: white;
-  margin-top: 1px;
-
+  margin-top: 3px;
+  top: 50px;
   font-size: 20pt;
   border: none;
   cursor: pointer;
   border-radius: 0;
 }
+/* Add this to your CSS */
 
+.navbar.open .dropbtn {
+  position: fixed;
+  top: 50px; /* Adjust this value as needed */
+  left: 0;
+}
 .dropdown {
   position: relative;
   display: inline-block;
+  top: 50px;
 }
 
 .dropdown-content {
   display: none;
   position: absolute;
+  top: 35px; /* Adjust this value as needed */
   background-color: #f9f9f9;
-
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
@@ -138,4 +160,11 @@ table {
 .dropdown:hover .dropbtn {
   background-color: #f4f4f5;
   color: black;
+}
+.navbar-toggle {
+  background-color: transparent;
+  color: #000000;
+}
+.navbar-toggle:hover {
+  background-color: transparent;
 }
