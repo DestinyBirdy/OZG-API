@@ -83,8 +83,28 @@ function getLeika(leikaData, mytable) {
     keyCell.style.border = "1px solid #ddd"; // Add this line for cell borders
     const valueCell = document.createElement("td");
     const value = leikaData[key];
-
-    valueCell.innerHTML = value;
+    if (Array.isArray(value)) {
+      for (const subValue of value) {
+        const stringValue = String(subValue.uri);
+        if (stringValue.startsWith("http")) {
+          const a = document.createElement("a");
+          a.title = subValue.titel;
+          a.href = subValue.uri;
+          a.textContent = subValue.titel;
+          valueCell.appendChild(a);
+          const br = document.createElement("br");
+          valueCell.appendChild(br);
+        } else {
+          if (subValue.endsWith(" ")) {
+            valueCell.textContent += subValue.trim() + ", ";
+          } else {
+            valueCell.textContent += subValue + ", ";
+          }
+        }
+      }
+    } else {
+      valueCell.innerHTML = value;
+    }
 
     valueCell.style.border = "1px solid #ddd"; // Add this line for cell borders
     row.appendChild(keyCell);
