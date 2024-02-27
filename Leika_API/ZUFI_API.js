@@ -27,8 +27,6 @@ async function fetchDataZufi(optionalKeyID) {
     const mytable = document.getElementById("myTable");
 
     if (leistungsschluessel !== "") {
-      document.getElementById("1").innerText = "Stammtext";
-      document.getElementById("2").innerText = "Inhalt";
     }
     getZufi(zufiData, mytable);
   } catch (error) {
@@ -56,8 +54,6 @@ async function fetchDataLeika() {
       getLeikaKeyword(leikaData, mytable);
     } else {
       if (leistungsschluessel !== "") {
-        document.getElementById("1").innerText = "Stammtext";
-        document.getElementById("2").innerText = "Inhalt";
       }
       getLeika(leikaData, mytable);
     }
